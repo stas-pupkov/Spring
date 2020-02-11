@@ -1,7 +1,7 @@
-target/
+/target
 *.bak
 *.iml
-.idea/
+/.idea
 .project
 .settings
 *.sh
