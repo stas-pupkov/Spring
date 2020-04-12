@@ -3,9 +3,9 @@ package ru.pupkov.stas.cdek.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
-import ru.pupkov.stas.cdek.domain.Filter;
-import ru.pupkov.stas.cdek.domain.Filter2;
-import ru.pupkov.stas.cdek.domain.Filter3;
+import ru.pupkov.stas.cdek.domain.FilterByDateStart;
+import ru.pupkov.stas.cdek.domain.FilterByDateFinish;
+import ru.pupkov.stas.cdek.domain.FilterByOrderId;
 import ru.pupkov.stas.cdek.domain.TaskForCalling;
 import ru.pupkov.stas.cdek.repository.TasksRepository;
 
@@ -23,23 +23,23 @@ public class CallingCenterController {
         tasksRepository.save(taskForCalling);
     }
 
-    @DeleteMapping("/tasks/{id}")
-    public Iterable<TaskForCalling> deleteTask(@PathVariable("id") int id) {
-        tasksRepository.deleteById(id);
-        return tasksRepository.findAll();
-    }
-
+    /** Получить список заданий */
     @GetMapping("/tasks")
-    public Iterable<TaskForCalling> filterTasks(@RequestParam("dateStart") Date dateStart,
-                                                @RequestParam("dateFinish") Date dateFinish,
-                                                @RequestParam(name = "orderNumber", required = false) Integer number) {
-        if (number == null) {
-            return tasksRepository.findAll(Specification.where(Filter.checkCompleted(dateStart)
-                    .and(Filter2.checkCompleted(dateFinish))));
+    public Iterable<TaskForCalling> findTasks(@RequestParam(name = "dateStart", required = false) Date dateStart,
+                                              @RequestParam(name = "dateFinish", required = false) Date dateFinish,
+                                              @RequestParam(name = "orderId", required = false) Integer orderId) {
+        if (orderId == null && (dateStart == null || dateFinish == null)) {
+            return tasksRepository.findAll();
+        }
+        else if (orderId == null && dateStart != null && dateFinish != null) {
+            return tasksRepository.findAll(Specification
+                    .where(FilterByDateStart.filterByDateStart(dateStart)
+                    .and(FilterByDateFinish.filterByDateFinish(dateFinish))));
         } else {
-            return tasksRepository.findAll(Specification.where(Filter.checkCompleted(dateStart)
-                    .and(Filter2.checkCompleted(dateFinish))).and(Filter3.checkCompleted(number)));
+            return tasksRepository.findAll(Specification
+                    .where(FilterByDateStart.filterByDateStart(dateStart)
+                    .and(FilterByDateFinish.filterByDateFinish(dateFinish)))
+                    .and(FilterByOrderId.filterByOrderId(orderId)));
         }
     }
-
 }

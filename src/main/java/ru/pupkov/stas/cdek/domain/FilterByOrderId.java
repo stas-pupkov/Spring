@@ -7,16 +7,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.sql.Date;
 
-public class Filter3 {
+public class FilterByOrderId {
 
     @Nullable
-    public static Specification<TaskForCalling> checkCompleted(int orderNumber) {
+    public static Specification<TaskForCalling> filterByOrderId(Integer orderId) {
         return new Specification<TaskForCalling>() {
             @Override
             public Predicate toPredicate(Root<TaskForCalling> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("orderId"), orderNumber);
+                return criteriaBuilder.equal(root.get("orderId"), orderId);
             }
         };
     }

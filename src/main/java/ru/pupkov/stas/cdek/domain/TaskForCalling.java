@@ -9,27 +9,30 @@ import java.sql.Date;
 public class TaskForCalling {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Integer orderId;
 
     @Column(nullable = false)
-    private Date date;
+    private Date orderCreationTime;
 
     @Column(nullable = false)
-    private Date addingTime;
+    private Date taskAddingTime;
 
-    private boolean completedTask;
+    private boolean taskIsCompleted;
 
     public TaskForCalling() {
     }
 
-    public TaskForCalling(Integer orderId, Date date, Date addingTime, boolean completedTask) {
+    public TaskForCalling(Integer orderId,
+                          Date orderCreationTime,
+                          Date taskAddingTime,
+                          boolean taskIsCompleted) {
         this.orderId = orderId;
-        this.date = date;
-        this.addingTime = addingTime;
-        this.completedTask = completedTask;
+        this.orderCreationTime = orderCreationTime;
+        this.taskAddingTime = taskAddingTime;
+        this.taskIsCompleted = taskIsCompleted;
     }
 
     public Integer getId() {
@@ -48,27 +51,27 @@ public class TaskForCalling {
         this.orderId = orderId;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getOrderCreationTime() {
+        return orderCreationTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setOrderCreationTime(Date orderCreationTime) {
+        this.orderCreationTime = orderCreationTime;
     }
 
-    public Date getAddingTime() {
-        return addingTime;
+    public Date getTaskAddingTime() {
+        return taskAddingTime;
     }
 
-    public void setAddingTime(Date addingTime) {
-        this.addingTime = addingTime;
+    public void setTaskAddingTime(Date taskAddingTime) {
+        this.taskAddingTime = taskAddingTime;
     }
 
-    public boolean isCompletedTask() {
-        return completedTask;
+    public boolean isTaskIsCompleted() {
+        return taskIsCompleted;
     }
 
-    public void setCompletedTask(boolean completedTask) {
-        this.completedTask = completedTask;
+    public void setTaskIsCompleted(boolean taskIsCompleted) {
+        this.taskIsCompleted = taskIsCompleted;
     }
 }

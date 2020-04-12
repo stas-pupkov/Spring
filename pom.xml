@@ -61,6 +61,10 @@
 			<groupId>com.googlecode.flyway</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 		<!-- DataBase support -->
     </dependencies>
 
